@@ -1,0 +1,583 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <title>
+        Quản lý sản phẩm
+    </title>
+    <script src="https://cdn.tailwindcss.com">
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter&amp;display=swap" rel="stylesheet" />
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: "Inter", sans-serif;
+        }
+    </style>
+    <script>
+        // Kiểm tra token và role trong localStorage
+        const token = localStorage.getItem('token');
+        const role = localStorage.getItem('role');
+        if (!token || role !== 'admin') {
+            // Không có token hoặc không phải admin thì về trang chủ
+            window.location.href = 'index.html';
+        } else {
+            // Gửi request xác thực lên server
+            fetch('http://localhost:3000/api/admin', {
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            })
+                .then(res => {
+                    if (!res.ok) {
+                        // Nếu không hợp lệ, về trang chủ
+                        window.location.href = 'index.html';
+                    }
+                });
+        }
+
+        // Dữ liệu sản phẩm
+        let products = [];
+
+        // Hàm tải danh sách sản phẩm từ API
+        async function loadProducts() {
+            try {
+                const response = await fetch('http://localhost:3000/api/products');
+                const data = await response.json();
+
+                if (data.success) {
+                    products = data.products;
+                    displayProducts();
+                } else {
+                    alert('Lỗi: ' + data.message);
+                }
+            } catch (error) {
+                console.error('Lỗi khi tải sản phẩm:', error);
+                // Nếu API không hoạt động, sử dụng dữ liệu mẫu
+                products = [
+                    {
+                        id: 1,
+                        name: 'Pizza Ngập Phô Mai Hảo Hạng',
+                        description: 'Pizza Ngập Phô Mai Hảo Hạng - Sự kết hợp hoàn hảo của 5 loại phô mai cao cấp',
+                        price: 175000,
+                        image_url: '/webHTML-master/uploads/pizza2.jpg',
+                        type: 'hot'
+                    },
+                    {
+                        id: 2,
+                        name: 'Pizza Núi Lửa Phô Mai Xúc Xích Ý',
+                        description: 'Pizza Núi Lửa Phô Mai Xúc Xích Ý - Tuyệt phẩm với lớp phô mai Mozzarella tan chảy',
+                        price: 305000,
+                        image_url: '/webHTML-master/uploads/pizza1.jpg',
+                        type: 'hot'
+                    },
+                    // Thêm các sản phẩm mẫu khác nếu cần
+                ];
+                displayProducts();
+            }
+        }
+
+        // Hàm hiển thị danh sách sản phẩm
+        function displayProducts() {
+            const tableBody = document.getElementById('productTableBody');
+            tableBody.innerHTML = '';
+
+            products.forEach(product => {
+                const row = document.createElement('tr');
+                row.className = 'hover:bg-gray-50';
+                row.innerHTML = `
+                    <td class="px-6 py-4 font-medium">#${product.id}</td>
+                    <td class="px-6 py-4">
+                        <div class="flex items-center">
+                            <img src="${product.image_url}" alt="${product.name}" class="w-10 h-10 object-cover rounded mr-3">
+                            <span>${product.name}</span>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4">${product.description ? product.description.substring(0, 50) + '...' : ''}</td>
+                    <td class="px-6 py-4">${parseInt(product.price).toLocaleString()}đ</td>
+                    <td class="px-6 py-4">
+                        <span class="px-2 py-1 ${product.type === 'hot' ? 'bg-red-100 text-red-800' : 'bg-blue-100 text-blue-800'} rounded-full text-xs font-medium">
+                            ${product.type === 'hot' ? 'Bán chạy' : 'Khuyến mãi'}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 text-right">
+                        <button onclick="openEditModal(${product.id})" class="text-indigo-600 hover:text-indigo-900 mr-3"><i class="fas fa-edit"></i> Sửa</button>
+                        <button onclick="deleteProduct(${product.id})" class="text-red-600 hover:text-red-900"><i class="fas fa-trash"></i> Xóa</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Hàm mở modal thêm sản phẩm
+        function openAddModal() {
+            document.getElementById('productModal').classList.remove('hidden');
+            document.getElementById('modalTitle').textContent = 'Thêm sản phẩm mới';
+            document.getElementById('productForm').reset();
+            document.getElementById('productId').value = '';
+            document.getElementById('selectedImagePreview').classList.add('hidden');
+            document.getElementById('saveBtn').textContent = 'Thêm sản phẩm';
+        }
+
+        // Hàm mở modal sửa sản phẩm
+        async function openEditModal(id) {
+            try {
+                // Lấy thông tin chi tiết sản phẩm từ API
+                const response = await fetch(`http://localhost:3000/api/products/${id}`);
+                const data = await response.json();
+
+                if (!data.success) {
+                    alert('Lỗi: ' + data.message);
+                    return;
+                }
+
+                const product = data.product;
+
+                document.getElementById('productModal').classList.remove('hidden');
+                document.getElementById('modalTitle').textContent = 'Sửa sản phẩm';
+
+                document.getElementById('productId').value = product.id;
+                document.getElementById('productName').value = product.name;
+                document.getElementById('productDescription').value = product.description || '';
+                document.getElementById('productPrice').value = product.price;
+                document.getElementById('productImage').value = product.image_url || '';
+                document.getElementById('productBase').value = product.base || '';
+                document.getElementById('productTopping').value = product.topping || '';
+                document.getElementById('productSauce').value = product.sauce || '';
+                document.getElementById('productType').value = product.type;
+
+                // Hiển thị ảnh đã chọn
+                if (product.image_url) {
+                    document.getElementById('imagePreview').src = product.image_url;
+                    document.getElementById('selectedImagePreview').classList.remove('hidden');
+                } else {
+                    document.getElementById('selectedImagePreview').classList.add('hidden');
+                }
+
+                // Reset trường file input
+                document.getElementById('productImageFile').value = '';
+
+                document.getElementById('saveBtn').textContent = 'Cập nhật sản phẩm';
+            } catch (error) {
+                console.error('Lỗi khi lấy thông tin sản phẩm:', error);
+                // Nếu API không hoạt động, sử dụng dữ liệu từ mảng products
+                const product = products.find(p => p.id === id);
+                if (!product) return;
+
+                document.getElementById('productModal').classList.remove('hidden');
+                document.getElementById('modalTitle').textContent = 'Sửa sản phẩm';
+
+                document.getElementById('productId').value = product.id;
+                document.getElementById('productName').value = product.name;
+                document.getElementById('productDescription').value = product.description || '';
+                document.getElementById('productPrice').value = product.price;
+                document.getElementById('productImage').value = product.image_url || '';
+                document.getElementById('productBase').value = product.base || '';
+                document.getElementById('productTopping').value = product.topping || '';
+                document.getElementById('productSauce').value = product.sauce || '';
+                document.getElementById('productType').value = product.type;
+
+                // Hiển thị ảnh đã chọn
+                if (product.image_url) {
+                    document.getElementById('imagePreview').src = product.image_url;
+                    document.getElementById('selectedImagePreview').classList.remove('hidden');
+                } else {
+                    document.getElementById('selectedImagePreview').classList.add('hidden');
+                }
+
+                // Reset trường file input
+                document.getElementById('productImageFile').value = '';
+
+                document.getElementById('saveBtn').textContent = 'Cập nhật sản phẩm';
+            }
+        }
+
+        // Hàm đóng modal
+        function closeModal() {
+            document.getElementById('productModal').classList.add('hidden');
+        }
+
+        // Hàm lưu sản phẩm (thêm mới hoặc cập nhật)
+        async function saveProduct() {
+            const form = document.getElementById('productForm');
+            const id = document.getElementById('productId').value;
+            const name = document.getElementById('productName').value;
+            const description = document.getElementById('productDescription').value;
+            const price = parseInt(document.getElementById('productPrice').value);
+            const image_url = document.getElementById('productImage').value;
+            const base = document.getElementById('productBase').value;
+            const topping = document.getElementById('productTopping').value;
+            const sauce = document.getElementById('productSauce').value;
+            const type = document.getElementById('productType').value;
+
+            if (!name || !description || !price || !image_url) {
+                alert('Vui lòng điền đầy đủ thông tin sản phẩm');
+                return;
+            }
+
+            const productData = {
+                name,
+                description,
+                price,
+                image_url,
+                base,
+                topping,
+                sauce,
+                type
+            };
+
+            try {
+                let url = 'http://localhost:3000/api/products';
+                let method = 'POST';
+
+                if (id) {
+                    // Cập nhật sản phẩm
+                    url = `http://localhost:3000/api/products/${id}`;
+                    method = 'PUT';
+                }
+
+                const response = await fetch(url, {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    },
+                    body: JSON.stringify(productData)
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    alert(id ? 'Cập nhật sản phẩm thành công' : 'Thêm sản phẩm thành công');
+                    loadProducts(); // Tải lại danh sách sản phẩm
+                    closeModal();
+                } else {
+                    alert('Lỗi: ' + data.message);
+                }
+            } catch (error) {
+                console.error('Lỗi khi lưu sản phẩm:', error);
+                // Xử lý offline (không có API)
+                if (id) {
+                    // Cập nhật sản phẩm
+                    const index = products.findIndex(p => p.id === parseInt(id));
+                    if (index !== -1) {
+                        products[index] = {
+                            id: parseInt(id),
+                            name,
+                            description,
+                            price,
+                            image_url,
+                            base,
+                            topping,
+                            sauce,
+                            type
+                        };
+                    }
+                } else {
+                    // Thêm sản phẩm mới
+                    const newId = products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1;
+                    products.push({
+                        id: newId,
+                        name,
+                        description,
+                        price,
+                        image_url,
+                        base,
+                        topping,
+                        sauce,
+                        type
+                    });
+                }
+
+                displayProducts();
+                closeModal();
+            }
+        }
+
+        // Hàm xóa sản phẩm
+        async function deleteProduct(id) {
+            if (confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')) {
+                try {
+                    const response = await fetch(`http://localhost:3000/api/products/${id}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Authorization': 'Bearer ' + localStorage.getItem('token')
+                        }
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        alert('Xóa sản phẩm thành công');
+                        loadProducts(); // Tải lại danh sách sản phẩm
+                    } else {
+                        alert('Lỗi: ' + data.message);
+                    }
+                } catch (error) {
+                    console.error('Lỗi khi xóa sản phẩm:', error);
+                    // Xử lý offline (không có API)
+                    const index = products.findIndex(p => p.id === id);
+                    if (index !== -1) {
+                        products.splice(index, 1);
+                        displayProducts();
+                    }
+                }
+            }
+        }
+
+        // Khởi tạo khi trang được load
+        window.onload = function () {
+            loadProducts();
+        };
+
+        // Hàm xử lý khi người dùng chọn ảnh từ máy tính
+        function handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                // Tạo URL cho ảnh đã chọn
+                const imageUrl = URL.createObjectURL(file);
+
+                // Hiển thị ảnh xem trước
+                document.getElementById('imagePreview').src = imageUrl;
+                document.getElementById('selectedImagePreview').classList.remove('hidden');
+
+                // Lưu thông tin file vào form
+                document.getElementById('productImage').value = file.name;
+
+                // Tạo FormData để upload file
+                const formData = new FormData();
+                formData.append('image', file);
+
+                // Upload file lên server
+                fetch('http://localhost:3000/api/upload', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    },
+                    body: formData
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Cập nhật đường dẫn ảnh từ server
+                            document.getElementById('productImage').value = data.filePath;
+                        } else {
+                            alert('Lỗi khi tải ảnh lên: ' + data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Lỗi khi tải ảnh lên:', error);
+                        // Trong trường hợp lỗi, vẫn giữ tên file làm đường dẫn
+                    });
+            }
+        }
+
+        // Hàm đăng xuất
+        function logout() {
+            // Xóa token và role khỏi localStorage
+            localStorage.removeItem('token');
+            localStorage.removeItem('role');
+            // Chuyển hướng về trang đăng nhập
+            window.location.href = 'index.html';
+        }
+    </script>
+</head>
+
+<body class="bg-white text-gray-900 min-h-screen flex">
+    <!-- Sidebar -->
+    <aside class="flex flex-col justify-between w-72 border-r border-gray-200 bg-white min-h-screen">
+        <div>
+            <div class="flex items-center gap-3 px-6 py-5 border-b border-gray-200">
+                <img src="/webHTML-master/uploads/logopizza (1).png" alt="Pizza Company logo"
+                    class="w-10 h-10 object-contain" height="60" width="60" />
+                <span class="font-semibold text-lg text-gray-900 select-none">
+                    Pizza Company
+                </span>
+            </div>
+            <nav class="mt-6 flex flex-col gap-6 px-6">
+                <a class="flex items-center gap-3 text-gray-700 hover:text-gray-900 text-sm font-semibold"
+                    href="admin.html">
+                    <i class="fas fa-th-large text-lg">
+                    </i>
+                    Tổng quan
+                </a>
+                <a class="flex items-center gap-3 text-gray-900 text-sm font-semibold" href="products.html">
+                    <i class="fas fa-box text-lg"></i>
+                    Sản phẩm
+                </a>
+            </nav>
+        </div>
+        <div class="px-6 py-5 border-t border-gray-200">
+            <div class="flex items-center gap-3 mb-3">
+                <div class="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center text-gray-600">
+                    <i class="fas fa-user">
+                    </i>
+                </div>
+                <div class="leading-tight">
+                    <p class="text-gray-900 font-semibold text-sm select-none">
+                        Admin
+                    </p>
+                    <p class="text-gray-500 text-xs select-none">
+                        Quản trị viên
+                    </p>
+                </div>
+            </div>
+            <button
+                class="w-full flex items-center justify-center gap-2 border border-gray-300 rounded-md py-2 text-gray-900 font-semibold text-sm hover:bg-gray-100"
+                type="button" onclick="logout()">
+                <i class="fas fa-sign-out-alt">
+                </i>
+                Đăng xuất
+            </button>
+        </div>
+    </aside>
+    <!-- Main content -->
+    <main class="flex-1 p-6">
+        <div class="mb-4 text-sm text-gray-600 select-none">
+            Tổng quan
+            <span class="text-indigo-600">
+                /
+            </span>
+            <a class="text-indigo-600 hover:underline" href="#">
+                Sản phẩm
+            </a>
+        </div>
+        <h1 class="text-3xl font-extrabold text-gray-900 flex items-center gap-2 mb-1 select-none">
+            <i class="fas fa-box text-indigo-600"></i>
+            Quản lý sản phẩm
+        </h1>
+        <p class="text-gray-700 mb-6 select-none">
+            Quản lý danh sách sản phẩm pizza
+        </p>
+
+        <!-- Nút thêm sản phẩm -->
+        <div class="mb-6">
+            <button onclick="openAddModal()"
+                class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 flex items-center gap-2">
+                <i class="fas fa-plus"></i> Thêm sản phẩm mới
+            </button>
+        </div>
+
+        <section class="bg-white border border-gray-200 rounded-lg shadow-sm">
+            <header class="flex justify-between items-center px-6 py-4 border-b border-gray-200">
+                <h2 class="font-semibold text-gray-900 select-none">
+                    Danh sách sản phẩm
+                </h2>
+                <div class="flex items-center gap-2">
+                    <input type="text" placeholder="Tìm kiếm sản phẩm..."
+                        class="border border-gray-300 rounded-md px-3 py-1 text-sm">
+                    <button class="text-indigo-600 hover:text-indigo-900"><i class="fas fa-search"></i></button>
+                </div>
+            </header>
+            <table class="w-full text-left text-gray-600 text-xs sm:text-sm">
+                <thead class="border-b border-gray-200">
+                    <tr>
+                        <th class="px-6 py-3 font-semibold uppercase tracking-wide select-none">
+                            Mã SP
+                        </th>
+                        <th class="px-6 py-3 font-semibold uppercase tracking-wide select-none">
+                            Tên sản phẩm
+                        </th>
+                        <th class="px-6 py-3 font-semibold uppercase tracking-wide select-none">
+                            Mô tả
+                        </th>
+                        <th class="px-6 py-3 font-semibold uppercase tracking-wide select-none">
+                            Giá
+                        </th>
+                        <th class="px-6 py-3 font-semibold uppercase tracking-wide select-none">
+                            Loại
+                        </th>
+                        <th class="px-6 py-3 text-right font-semibold uppercase tracking-wide select-none">
+                            Thao tác
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="productTableBody">
+                    <!-- Dữ liệu sản phẩm sẽ được thêm vào đây bằng JavaScript -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <!-- Modal thêm/sửa sản phẩm -->
+    <div id="productModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+        <div class="bg-white rounded-lg shadow-lg w-full max-w-2xl">
+            <div class="border-b border-gray-200 px-6 py-4 flex justify-between items-center">
+                <h3 id="modalTitle" class="text-lg font-semibold text-gray-900">Thêm sản phẩm mới</h3>
+                <button onclick="closeModal()" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="productForm" class="p-6">
+                <input type="hidden" id="productId">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label for="productName" class="block text-sm font-medium text-gray-700 mb-1">Tên sản
+                            phẩm</label>
+                        <input type="text" id="productName" class="w-full border border-gray-300 rounded-md px-3 py-2"
+                            required>
+                    </div>
+                    <div>
+                        <label for="productPrice" class="block text-sm font-medium text-gray-700 mb-1">Giá (VNĐ)</label>
+                        <input type="number" id="productPrice"
+                            class="w-full border border-gray-300 rounded-md px-3 py-2" required>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label for="productDescription" class="block text-sm font-medium text-gray-700 mb-1">Mô tả</label>
+                    <textarea id="productDescription" rows="3"
+                        class="w-full border border-gray-300 rounded-md px-3 py-2" required></textarea>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label for="productImage" class="block text-sm font-medium text-gray-700 mb-1">Hình ảnh sản
+                            phẩm</label>
+                        <div class="flex items-center">
+                            <input type="file" id="productImageFile" accept="image/*"
+                                class="w-full border border-gray-300 rounded-md px-3 py-2"
+                                onchange="handleImageUpload(event)">
+                            <input type="hidden" id="productImage">
+                        </div>
+                        <div id="selectedImagePreview" class="mt-2 hidden">
+                            <img id="imagePreview" src="" alt="Preview" class="h-20 object-contain border rounded-md">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="productType" class="block text-sm font-medium text-gray-700 mb-1">Loại sản
+                            phẩm</label>
+                        <select id="productType" class="w-full border border-gray-300 rounded-md px-3 py-2" required>
+                            <option value="hot">Bán chạy</option>
+                            <option value="discount">Khuyến mãi</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                    <div>
+                        <label for="productBase" class="block text-sm font-medium text-gray-700 mb-1">Đế bánh</label>
+                        <input type="text" id="productBase" class="w-full border border-gray-300 rounded-md px-3 py-2">
+                    </div>
+                    <div>
+                        <label for="productTopping" class="block text-sm font-medium text-gray-700 mb-1">Topping</label>
+                        <input type="text" id="productTopping"
+                            class="w-full border border-gray-300 rounded-md px-3 py-2">
+                    </div>
+                    <div>
+                        <label for="productSauce" class="block text-sm font-medium text-gray-700 mb-1">Sốt</label>
+                        <input type="text" id="productSauce" class="w-full border border-gray-300 rounded-md px-3 py-2">
+                    </div>
+                </div>
+                <div class="flex justify-end gap-3 mt-6">
+                    <button type="button" onclick="closeModal()"
+                        class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">Hủy</button>
+                    <button type="button" id="saveBtn" onclick="saveProduct()"
+                        class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">Thêm sản phẩm</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

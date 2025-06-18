@@ -1,0 +1,1619 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizza Store</title>
+    <link rel="stylesheet" href="/webHTML-master/css/style.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <style>
+        .logged-in .login-btn {
+            display: none;
+        }
+
+        .logout-btn {
+            display: none;
+        }
+
+        .logged-in .logout-btn {
+            display: inline-block;
+            border: none;
+            outline: none;
+            background: #ff4444;
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            padding: 10px 18px;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: 0.15s ease;
+        }
+
+        .logged-in .logout-btn:hover {
+            background: #cc0000;
+        }
+
+        .user-info {
+            display: none;
+            margin-right: 15px;
+            color: #275360;
+            font-weight: 500;
+        }
+
+        .logged-in .user-info {
+            display: inline-block;
+        }
+
+        .user-profile {
+            position: relative;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            padding: 8px 15px;
+            border-radius: 50px;
+            background: #f8f9fa;
+            transition: all 0.3s ease;
+            margin-right: 15px;
+            border: 1px solid #e9ecef;
+        }
+
+        .logged-in .user-profile {
+            display: flex;
+        }
+
+        .user-profile:hover {
+            background: #e9ecef;
+        }
+
+        .user-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: #275360;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 500;
+            font-size: 16px;
+            text-transform: uppercase;
+            margin-right: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Style cho user info */
+        .user-info {
+            display: none;
+            margin-right: 5px;
+        }
+
+        .logged-in .user-info {
+            display: block;
+        }
+
+        .user-greeting {
+            font-size: 12px;
+            color: #6c757d;
+            display: block;
+            line-height: 1.2;
+            margin-bottom: 2px;
+        }
+
+        .user-email {
+            color: #275360;
+            font-weight: 500;
+            font-size: 13px;
+            display: block;
+            max-width: 150px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            line-height: 1.2;
+        }
+
+        /* Style cho dropdown */
+        .user-dropdown {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            background: white;
+            border-radius: 10px;
+            min-width: 280px;
+            padding: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            display: none;
+            z-index: 1000;
+            border: 1px solid #e9ecef;
+        }
+
+        .user-dropdown.show {
+            display: block;
+        }
+
+        .dropdown-item {
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            border-radius: 8px;
+            margin: 2px 0;
+        }
+
+        .dropdown-item:hover {
+            background: #f8f9fa;
+        }
+
+        .dropdown-item i {
+            width: 20px;
+            margin-right: 10px;
+            font-size: 16px;
+            color: #275360;
+        }
+
+        .dropdown-item span {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background: #e9ecef;
+            margin: 8px 4px;
+        }
+
+        #logout-link {
+            color: #dc3545;
+        }
+
+        #logout-link i {
+            color: #dc3545;
+        }
+
+        #logout-link:hover {
+            background: #dc3545;
+            color: white;
+        }
+
+        #logout-link:hover i {
+            color: white;
+        }
+
+        /* Ẩn nút đăng xuất cũ */
+        .logout-btn {
+            display: none !important;
+        }
+
+        .product-detail-popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .product-detail-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .product-detail-content .close-detail {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #275360;
+            transition: color 0.3s;
+        }
+
+        .product-detail-content .close-detail:hover {
+            color: #ff4444;
+        }
+
+        .product-detail-image {
+            grid-column: 1;
+            width: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .product-detail-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .product-detail-image img:hover {
+            transform: scale(1.05);
+        }
+
+        .product-detail-info {
+            grid-column: 2;
+            padding: 20px 0;
+        }
+
+        .product-detail-info h3 {
+            color: #275360;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .product-detail-price {
+            font-size: 28px;
+            color: #ff4444;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .product-detail-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .product-detail-specs {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .product-detail-specs p {
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .product-detail-specs strong {
+            color: #275360;
+            min-width: 100px;
+        }
+
+        .product-detail-specs span {
+            color: #666;
+        }
+
+        /* Thêm style cho phần controls */
+        .product-detail-controls {
+            margin-top: 20px;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .quantity-btn {
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: #275360;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+
+        .quantity-btn:hover {
+            background: #1a3f4a;
+        }
+
+        .quantity-input {
+            width: 60px;
+            height: 40px;
+            text-align: center;
+            margin: 0 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .add-to-cart-btn,
+        .add-to-favorite-btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .add-to-cart-btn {
+            background: #ff4444;
+            color: white;
+        }
+
+        .add-to-cart-btn:hover {
+            background: #ff2020;
+        }
+
+        .add-to-favorite-btn {
+            background: #fff;
+            color: #275360;
+            border: 2px solid #275360;
+        }
+
+        .add-to-favorite-btn:hover {
+            background: #275360;
+            color: white;
+        }
+
+        .add-to-favorite-btn.active {
+            background: #275360;
+            color: white;
+        }
+
+        .favorite-icon {
+            font-size: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .product-detail-content {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+
+            .product-detail-image,
+            .product-detail-info {
+                grid-column: 1;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+
+        .popup_shopping .body_shopping {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .cart-footer {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-total {
+            font-size: 18px;
+            color: #275360;
+            font-weight: 600;
+        }
+
+        .cart-total span {
+            color: #ff4444;
+            margin-left: 10px;
+        }
+
+        .cart-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .checkout-btn {
+            background: #ff4444;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.3s;
+        }
+
+        .checkout-btn:hover {
+            background: #ff2020;
+        }
+
+        .checkout-btn i {
+            font-size: 18px;
+        }
+
+        .close-btn {
+            background: #275360;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .close-btn:hover {
+            background: #1a3f4a;
+        }
+
+        /* Style cho nút close trong form đăng nhập */
+        .form-popup .close-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 30px;
+            height: 30px;
+            font-size: 30px;
+            line-height: 30px;
+            text-align: center;
+            cursor: pointer;
+            color: #878484;
+            background: none;
+            border: none;
+            z-index: 1000;
+            transition: color 0.3s ease;
+        }
+
+        .form-popup .close-btn:hover {
+            color: #ff4444;
+        }
+
+        /* Style cho dropdown favorite list */
+        .favorite-list {
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 0 5px;
+        }
+
+        .favorite-item {
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            border-radius: 8px;
+            margin-bottom: 5px;
+            background: #f8f9fa;
+            transition: all 0.2s ease;
+        }
+
+        .favorite-item:hover {
+            background: #e9ecef;
+        }
+
+        .favorite-item img {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            object-fit: cover;
+            margin-right: 10px;
+        }
+
+        .favorite-item-info {
+            flex: 1;
+        }
+
+        .favorite-item-name {
+            font-size: 13px;
+            font-weight: 500;
+            color: #275360;
+            margin-bottom: 2px;
+            display: block;
+        }
+
+        .favorite-item-price {
+            font-size: 12px;
+            color: #6c757d;
+        }
+
+        .remove-favorite {
+            color: #dc3545;
+            cursor: pointer;
+            padding: 5px;
+            font-size: 14px;
+            opacity: 0.7;
+            transition: opacity 0.2s ease;
+        }
+
+        .remove-favorite:hover {
+            opacity: 1;
+        }
+
+        .no-favorites {
+            text-align: center;
+            padding: 20px;
+            color: #6c757d;
+            font-size: 13px;
+        }
+
+        /* Ẩn giỏ hàng khi chưa đăng nhập */
+        .card__head {
+            display: none;
+        }
+
+        .logged-in .card__head {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- header -->
+    <header>
+        <div class="container">
+            <div class="content__header">
+                <div class="logo__header">
+                    <img src="/webHTML-master/uploads/logopizza (1).png" alt="">
+                </div>
+                <div class="menu__header">
+                    <nav>
+                        <ul class="nav__link">
+                            <li><a href="">Trang chủ</a></li>
+                            <li><a href="">Giới thiệu</a></li>
+                            <li><a href="">Sản phẩm</a></li>
+                            <li><a href="">Liên hệ</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="user-profile">
+                    <div class="user-avatar"></div>
+                    <div class="user-info">
+                        <span class="user-greeting">Xin chào,</span>
+                        <span class="user-email"></span>
+                    </div>
+                    <div class="user-dropdown">
+                        <a href="#" class="dropdown-item" id="favorite-menu">
+                            <i class="fas fa-heart"></i>
+                            <span>Pizza yêu thích</span>
+                        </a>
+                        <div class="favorite-list">
+                            <div class="no-favorites">Chưa có pizza yêu thích</div>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item" id="logout-link">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Đăng xuất</span>
+                        </a>
+                    </div>
+                </div>
+                <button class="login-btn">ĐĂNG NHẬP</button>
+                <button class="logout-btn">ĐĂNG XUẤT</button>
+                <div class="card__head">
+                    <div class="card" id="popup_card">
+                        <img src="/webHTML-master/uploads/Group 16.png" alt="">
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- login -->
+        <div class="blur-bg-overlay"></div>
+        <div class="form-popup">
+            <button type="button" class="close-btn" onclick="document.body.classList.remove('show-popup')">×</button>
+            <div class="form-box login">
+                <div class="form-details">
+                    <h2 style="color: black;">Xin chào</h2>
+                    <p style="color: black;">Đăng nhập hoặc tạo tài khoản</p>
+                </div>
+                <div class="form-content">
+                    <h2>ĐĂNG NHẬP</h2>
+                    <form id="login-form" method="POST">
+                        <div class="input-field">
+                            <input type="text" name="email" id="login-email" required>
+                            <label>Email</label>
+                        </div>
+                        <div class="input-field">
+                            <input type="password" name="password" id="login-password" required>
+                            <label>Mật khẩu</label>
+                        </div>
+                        <button type="submit">Đăng nhập</button>
+                    </form>
+                    <div class="bottom-link">
+                        Bạn chưa có tài khoản?
+                        <a href="#" id="signup-link">Đăng ký</a>
+                    </div>
+                </div>
+            </div>
+            <div class="form-box signup">
+                <div class="form-details">
+                    <h2 style="color: black;">Tạo Tài Khoản</h2>
+                    <p style="color: black;">Đăng ký khách VIP</p>
+                </div>
+                <div class="form-content">
+                    <h2>ĐĂNG KÝ</h2>
+                    <form action="#" id="signup-form" method="POST">
+                        <div class="input-field">
+                            <input type="text" id="signup-email" required>
+                            <label>Nhập email của bạn</label>
+                        </div>
+                        <div class="input-field">
+                            <input type="password" id="signup-password" required>
+                            <label>Tạo mật khẩu</label>
+                        </div>
+                        <div class="policy-text">
+                            <input type="checkbox" id="policy">
+                            <label for="policy">
+                                Tôi đồng ý với
+                                <a href="#" class="option">Điều khoản & Điều kiện</a>
+                            </label>
+                        </div>
+                        <button type="submit">Đăng ký</button>
+                    </form>
+                    <div class="bottom-link">
+                        Bạn đã có tài khoản?
+                        <a href="#" id="login-link">Đăng nhập</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- end header -->
+    <!-- Nội dung chính -->
+    <div class="main-content">
+        <!-- slides -->
+        <section class="slide__body">
+            <div class="container">
+                <div class="container_slide">
+                    <div class="slides">
+                        <div class="item">
+                            <img src="/webHTML-master/uploads/uudai2.png" alt="">
+                        </div>
+                        <div class="item">
+                            <img src="/webHTML-master/uploads/uudai1 (1).png" alt="">
+                        </div>
+                        <div class="item">
+                            <img src="/webHTML-master/uploads/uudai3.png" alt="">
+                        </div>
+                    </div>
+                    <div class="next"><i class="fas fa-arrow-right"></i></div>
+                    <div class="prev"><i class="fas fa-arrow-left"></i></div>
+                </div>
+            </div>
+        </section>
+        <!-- end slides -->
+        <!-- Body product one -->
+        <section class="body_product">
+            <div class="container">
+                <div class="title">
+                    <h3>Sản phẩm bán chạy</h3>
+                </div>
+                <div class="show_product">
+                    <div class="card">
+                        <div class="items">
+                            <div class="image">
+                                <img src="/webHTML-master/uploads/pizza2.jpg" alt="">
+                            </div>
+                            <div class="text">
+                                <h3>Pizza ngập vị phô mai hảo hạng </h3>
+                                <p>175,000đ</p>
+                            </div>
+                            <div class="color">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                            <div class="button">
+                                <a href="#">Mua</a>
+                                <a href="#">Xem chi tiết</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="items">
+                            <div class="image">
+                                <img src="/webHTML-master/uploads/pizza1.jpg" alt="">
+                            </div>
+                            <div class="text">
+                                <h3>Pizza núi lửa phô mai xúc xích Ý </h3>
+                                <p>305,000đ</p>
+                            </div>
+                            <div class="color">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                            <div class="button">
+                                <a href="#">Mua</a>
+                                <a href="#">Xem chi tiết</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="items">
+                            <div class="image">
+                                <img src="/webHTML-master/uploads/pizza3.jpg" alt="">
+                            </div>
+                            <div class="text">
+                                <h3>Pizza topping bò và tôm kiểu Mỹ </h3>
+                                <p>235,000đ</p>
+                            </div>
+                            <div class="color">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                            <div class="button">
+                                <a href="#">Mua</a>
+                                <a href="#">Xem chi tiết</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="items">
+                            <div class="image">
+                                <img src="/webHTML-master/uploads/pizza4.png" alt="">
+                            </div>
+                            <div class="text">
+                                <h3>Pizza hải sản sốt PESTO kem</h3>
+                                <p>225,000đ</p>
+                            </div>
+                            <div class="color">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                            <div class="button">
+                                <a href="#">Mua</a>
+                                <a href="#">Xem chi tiết</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="items">
+                            <div class="image">
+                                <img src="/webHTML-master/uploads/pizza8.jpg" alt="">
+                            </div>
+                            <div class="text">
+                                <h3>Pizza rau củ thập cẩm</h3>
+                                <p>155,000đ</p>
+                            </div>
+                            <div class="color">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                            <div class="button">
+                                <a href="#">Mua</a>
+                                <a href="#">Xem chi tiết</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="items">
+                            <div class="image">
+                                <img src="/webHTML-master/uploads/pizza5.jpg" alt="">
+                            </div>
+                            <div class="text">
+                                <h3>Pizza gà phô mai thịt heo xông khói </h3>
+                                <p>175,000đ</p>
+                            </div>
+                            <div class="color">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                            <div class="button">
+                                <a href="#">Mua</a>
+                                <a href="#">Xem chi tiết</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="items">
+                            <div class="image">
+                                <img src="/webHTML-master/uploads/pizza6.jpg" alt="">
+                            </div>
+                            <div class="text">
+                                <h3>Pizza hải sản xốt kim quất </h3>
+                                <p>215,000đ</p>
+                            </div>
+                            <div class="color">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                            <div class="button">
+                                <a href="#">Mua</a>
+                                <a href="#">Xem chi tiết</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="items">
+                            <div class="image">
+                                <img src="/webHTML-master/uploads/pizza7.jpg" alt="">
+                            </div>
+                            <div class="text">
+                                <h3>Pizza bơ gơ bò Mỹ sốt phô mai </h3>
+                                <p>205,000đ</p>
+                            </div>
+                            <div class="color">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                            <div class="button">
+                                <a href="#">Mua</a>
+                                <a href="#">Xem chi tiết</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="items">
+                            <div class="image">
+                                <img src="/webHTML-master/uploads/pizza9.jpg" alt="">
+                            </div>
+                            <div class="text">
+                                <h3>Pizza dăm bông dứa kiểu Hawaii</h3>
+                                <p>175,000đ</p>
+                            </div>
+                            <div class="color">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                            <div class="button">
+                                <a href="#">Mua</a>
+                                <a href="#">Xem chi tiết</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="items">
+                            <div class="image">
+                                <img src="/webHTML-master/uploads/pizza10.jpg" alt="">
+                            </div>
+                            <div class="text">
+                                <h3>Pizza 5 loại thịt thượng hạng</h3>
+                                <p>205,000đ</p>
+                            </div>
+                            <div class="color">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                            <div class="button">
+                                <a href="#">Mua</a>
+                                <a href="#">Xem chi tiết</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- end Body product one -->
+        <!-- Body product discount -->
+        <section class="body_product discount">
+            <div class="container">
+                <div class="title">
+                    <h3>Combo khuyến mãi</h3>
+                </div>
+                <div class="show_product">
+                    <div class="card">
+                        <div class="items">
+                            <div class="image">
+                                <img src="/webHTML-master/uploads/pizzauudai1.jpg" alt="">
+                            </div>
+                            <div class="text">
+                                <h3>Pizaa NewYork size khổng lồ</h3>
+                                <span><s>499.000đ</s></span>
+                                <span>249.500đ</span>
+                            </div>
+                            <span class="discount">50%</span>
+                            <div class="color">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                            <div class="button">
+                                <a href="#">Mua</a>
+                                <a href="#">Xem chi tiết</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="items">
+                            <div class="image">
+                                <img src="/webHTML-master/uploads/pizzauudai2.jpg" alt="">
+                            </div>
+                            <div class="text">
+                                <h3>Càng đông càng ngon</h3>
+                                <span><s>349.000đ</s></span>
+                                <span>279.000đ</span>
+                            </div>
+                            <span class="discount">25%</span>
+                            <div class="color">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                            <div class="button">
+                                <a href="#">Mua</a>
+                                <a href="#">Xem chi tiết</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="items">
+                            <div class="image">
+                                <img src="/webHTML-master/uploads/pizzauudai3.jpg" alt="">
+                            </div>
+                            <div class="text">
+                                <h3>Gà nướng qua lò ngũ vị</h3>
+                                <span><s>99.000đ</s></span>
+                                <span>89.000đ</span>
+                            </div>
+                            <span class="discount">10%</span>
+                            <div class="color">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                            <div class="button">
+                                <a href="#">Mua</a>
+                                <a href="#">Xem chi tiết</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="items">
+                            <div class="image">
+                                <img src="/webHTML-master/uploads/pizzauudai4.jpg" alt="">
+                            </div>
+                            <div class="text">
+                                <h3>Tiết kiệm 50% khi mua pizza thứ 2</h3>
+                                <span><s>500.000đ</s></span>
+                                <span>250.000đ</span>
+                            </div>
+                            <span class="discount">50%</span>
+                            <div class="color">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                            <div class="button">
+                                <a href="#">Mua</a>
+                                <a href="#">Xem chi tiết</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="items">
+                            <div class="image">
+                                <img src="/webHTML-master/uploads/pizzauudai5.png" alt="">
+                            </div>
+                            <div class="text">
+                                <h3>Mỳ ý ở đây ngon VIBE</h3>
+                                <span><s>178.000đ</s></span>
+                                <span>89.000đ</span>
+                            </div>
+                            <span class="discount">50%</span>
+                            <div class="color">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                            <div class="button">
+                                <a href="#">Mua</a>
+                                <a href="#">Xem chi tiết</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- end Body product discount -->
+    </div>
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-4">
+                    <h3 class="name_website">PIZZA COMPANY</h3>
+                    <div>
+                        <img src="uploads/Group.png" alt="">
+                    </div>
+                    <p>
+                        Hotline: 1900 1234 - Giao hàng nhanh tận nơi
+                        <br>
+                    </p>
+                </div>
+                <div class="col-4">
+                    <h3 class="title">GIỚI THIỆU</h3>
+                    <ul>
+                        <li><a href="">Hệ thông nhà hàng</a></li>
+                        <li><a href="">Tin tức & Sự kiện</a></li>
+                        <li><a href="">Ưu đãi thành viên</a></li>
+                        <li><a href="">Tuyển dụng</a></li>
+                    </ul>
+                </div>
+                <div class="col-4">
+                    <h3 class="title">LIÊN HỆ</h3>
+                    <ul>
+                        <li><a href="">Hướng dẫn mua hàng</a></li>
+                        <li><a href="">Chính sách giao hàng</a></li>
+                        <li><a href="">Chinh sách bảo mật</a></li>
+                        <li><a href="">Điều khoản và điều kiện</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <p class="copyriht">Website design By PIZZA COMPANY @Nocopyright</p>
+    </footer>
+    <div class="overlay"></div>
+    <div class="popup_shopping">
+        <div class="body_shopping">
+            <table>
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Giá</th>
+                        <th>Số lượng</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Giỏ hàng sẽ được điền động bằng JavaScript -->
+                </tbody>
+            </table>
+            <div class="cart-footer">
+                <div class="cart-total">
+                    Tổng tiền: <span id="cart-total-amount">0đ</span>
+                </div>
+                <div class="cart-actions">
+                    <button type="button" class="checkout-btn">
+                        <i class="fas fa-credit-card"></i>
+                        Thanh toán
+                    </button>
+                    <button type="button" class="close-btn">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="product-detail-popup">
+        <div class="product-detail-content">
+            <span class="close-detail">&times;</span>
+            <div class="product-detail-image">
+                <img id="detail-image" src="" alt="Ảnh sản phẩm">
+            </div>
+            <div class="product-detail-info">
+                <h3 id="detail-name"></h3>
+                <div class="product-detail-price" id="detail-price"></div>
+                <p class="product-detail-description" id="detail-description"></p>
+                <div class="product-detail-specs">
+                    <p><strong>Đế bánh:</strong> <span id="detail-base"></span></p>
+                    <p><strong>Topping:</strong> <span id="detail-topping"></span></p>
+                    <p><strong>Sốt:</strong> <span id="detail-sauce"></span></p>
+                </div>
+                <div class="product-detail-controls">
+                    <div class="quantity-control">
+                        <button class="quantity-btn minus-btn">-</button>
+                        <input type="number" class="quantity-input" value="1" min="1" max="10">
+                        <button class="quantity-btn plus-btn">+</button>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="add-to-cart-btn">
+                            <i class="fas fa-shopping-cart"></i>
+                            Thêm vào giỏ hàng
+                        </button>
+                        <button class="add-to-favorite-btn">
+                            <i class="fas fa-heart favorite-icon"></i>
+                            Yêu thích
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/webHTML-master/js/login.js"></script>
+    <script src="/webHTML-master/js/slide.js"></script>
+    <script src="https://kit.fontawesome.com/03bca92048.js" crossorigin="anonymous"></script>
+    <script>
+        let popup_card = document.getElementById('popup_card');
+        let popup = document.querySelector('.popup_shopping');
+        let overlay = document.querySelector('.overlay');
+        let button = document.querySelector('button.button');
+        popup_card.addEventListener("click", () => {
+            popup.classList.add('active');
+            overlay.classList.add('active');
+        });
+        overlay.addEventListener("click", () => {
+            popup.classList.remove('active');
+            overlay.classList.remove('active');
+        });
+        button.addEventListener("click", () => {
+            popup.classList.remove('active');
+            overlay.classList.remove('active');
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Khởi tạo danh sách yêu thích từ localStorage
+            let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+            updateFavoritesList();
+
+            const cart = [];
+            const cartTableBody = document.querySelector('.popup_shopping tbody');
+            const cartCountSpan = document.querySelector('#popup_card span');
+
+            // Hàm kiểm tra đăng nhập
+            function isLoggedIn() {
+                return localStorage.getItem('token') !== null;
+            }
+
+            // Hàm hiển thị form đăng nhập
+            function showLoginForm() {
+                document.body.classList.add('show-popup');
+            }
+
+            // Xử lý thêm vào giỏ hàng từ popup chi tiết
+            document.querySelector('.add-to-cart-btn')?.addEventListener('click', () => {
+                if (!isLoggedIn()) {
+                    alert('Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng!');
+                    showLoginForm();
+                    return;
+                }
+
+                const name = document.getElementById('detail-name').textContent;
+                const price = document.getElementById('detail-price').textContent;
+                const quantity = parseInt(document.querySelector('.quantity-input').value);
+
+                const existingItem = cart.find(item => item.name === name);
+                if (existingItem) {
+                    const newQuantity = existingItem.quantity + quantity;
+                    if (newQuantity <= 10) {
+                        existingItem.quantity = newQuantity;
+                    } else {
+                        alert('Số lượng sản phẩm không thể vượt quá 10');
+                        return;
+                    }
+                } else {
+                    cart.push({ name, price, quantity });
+                }
+
+                updateCartUI();
+                alert('Đã thêm sản phẩm vào giỏ hàng!');
+            });
+
+            // Xử lý giỏ hàng từ trang chính
+            document.querySelectorAll('.button a:first-child').forEach((buyBtn) => {
+                buyBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+
+                    if (!isLoggedIn()) {
+                        alert('Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng!');
+                        showLoginForm();
+                        return;
+                    }
+
+                    const productCard = e.target.closest('.card');
+                    const name = productCard.querySelector('.text h3').textContent.trim();
+                    const price = getProductPrice(productCard);
+
+                    const existingItem = cart.find(item => item.name === name);
+                    if (existingItem) {
+                        if (existingItem.quantity < 10) {
+                            existingItem.quantity += 1;
+                        } else {
+                            alert('Số lượng sản phẩm không thể vượt quá 10');
+                            return;
+                        }
+                    } else {
+                        cart.push({ name, price, quantity: 1 });
+                    }
+                    updateCartUI();
+                });
+            });
+
+            // Xử lý nút thanh toán
+            document.querySelector('.checkout-btn')?.addEventListener('click', () => {
+                if (!isLoggedIn()) {
+                    alert('Vui lòng đăng nhập để thanh toán!');
+                    showLoginForm();
+                    return;
+                }
+
+                if (cart.length === 0) {
+                    alert('Giỏ hàng của bạn đang trống!');
+                    return;
+                }
+
+                const total = cart.reduce((sum, item) => {
+                    const priceNumber = parseInt(item.price.replace(/\D/g, ''));
+                    return sum + (priceNumber * item.quantity);
+                }, 0);
+
+                const orderDetails = cart.map(item =>
+                    `${item.name} x${item.quantity} - ${item.price}`
+                ).join('\n');
+
+                const message = `Xác nhận đơn hàng:\n\n${orderDetails}\n\nTổng tiền: ${formatPrice(total)}`;
+
+                if (confirm(message)) {
+                    alert('Đặt hàng thành công! Cảm ơn bạn đã mua hàng.');
+                    cart.length = 0; // Xóa giỏ hàng
+                    updateCartUI();
+                    document.querySelector('.popup_shopping').classList.remove('active');
+                    document.querySelector('.overlay').classList.remove('active');
+                }
+            });
+
+            // Xử lý click vào icon giỏ hàng
+            document.getElementById('popup_card').addEventListener('click', () => {
+                if (!isLoggedIn()) {
+                    alert('Vui lòng đăng nhập để xem giỏ hàng!');
+                    showLoginForm();
+                    return;
+                }
+                document.querySelector('.popup_shopping').classList.add('active');
+                document.querySelector('.overlay').classList.add('active');
+            });
+
+            // Dữ liệu mô tả chi tiết cho từng sản phẩm
+            const descriptions = [
+                {
+                    description: "Pizza Ngập Phô Mai Hảo Hạng - Sự kết hợp hoàn hảo của 5 loại phô mai cao cấp: Mozzarella, Cheddar, Parmesan, Phô mai dê và Phô mai xanh. Lớp phô mai béo ngậy, kéo sợi quyến rũ hòa quyện với đế bánh giòn rụm, tạo nên hương vị đặc trưng khó cưỡng.",
+                    base: "Đế mỏng giòn đặc biệt, được nướng trong lò củi truyền thống",
+                    topping: "Phô mai Mozzarella, Cheddar, Parmesan, Phô mai dê, Phô mai xanh",
+                    sauce: "Sốt cà chua Ý thượng hạng"
+                },
+                {
+                    description: "Pizza Núi Lửa Phô Mai Xúc Xích Ý - Tuyệt phẩm với lớp phô mai Mozzarella tan chảy, xúc xích Ý thơm nồng, ớt chuông và nấm tươi. Hương vị cay nồng của ớt hòa quyện cùng vị béo của phô mai tạo nên trải nghiệm ẩm thực độc đáo.",
+                    base: "Đế dày mềm kiểu New York",
+                    topping: "Xúc xích Ý, phô mai Mozzarella, ớt chuông, nấm, hành tây",
+                    sauce: "Sốt cà chua cay đặc biệt"
+                },
+                {
+                    description: "Pizza Topping Bò và Tôm Kiểu Mỹ - Sự kết hợp độc đáo giữa thịt bò Úc thượng hạng và tôm sú tươi. Thịt bò mềm juicy, tôm giòn ngọt, cùng với hỗn hợp rau củ tươi và phô mai Mozzarella béo ngậy tạo nên hương vị đầy đặc trưng.",
+                    base: "Đế vừa kiểu Chicago",
+                    topping: "Thịt bò Úc, tôm sú, nấm, hành tây, ớt chuông",
+                    sauce: "Sốt BBQ và sốt mayonnaise"
+                },
+                {
+                    description: "Pizza Hải Sản Sốt Pesto Kem - Hương vị biển cả với hải sản tươi ngon: tôm, mực, sò điệp, cùng sốt Pesto tự nhiên từ lá húng tây. Phủ lớp phô mai Mozzarella béo ngậy, điểm xuyết rau củ tươi.",
+                    base: "Đế mỏng giòn kiểu Ý",
+                    topping: "Tôm, mực, sò điệp, nấm, hành tây, ớt chuông",
+                    sauce: "Sốt Pesto kem đặc biệt"
+                },
+                {
+                    description: "Pizza Rau Củ Thập Cẩm - Lựa chọn tuyệt vời cho người ăn chay với sự kết hợp của các loại rau củ tươi ngon: nấm, ớt chuông, cà chua, hành tây, oliu đen, bắp ngọt. Hương vị thanh đạm và bổ dưỡng.",
+                    base: "Đế giòn vừa kiểu Địa Trung Hải",
+                    topping: "Nấm, ớt chuông, cà chua, hành tây, oliu đen, bắp ngọt",
+                    sauce: "Sốt cà chua hữu cơ"
+                },
+                {
+                    description: "Pizza Gà Phô Mai Thịt Heo Xông Khói - Sự kết hợp hài hòa giữa thịt gà mềm ngọt, thịt heo xông khói giòn thơm và phô mai Mozzarella béo ngậy. Thêm hành tây và nấm tạo nên hương vị đậm đà khó quên.",
+                    base: "Đế dày kiểu American",
+                    topping: "Thịt gà, thịt heo xông khói, phô mai Mozzarella, hành tây, nấm",
+                    sauce: "Sốt BBQ đặc biệt"
+                },
+                {
+                    description: "Pizza Hải Sản Xốt Kim Quất - Sáng tạo độc đáo với hương vị chua ngọt từ xốt kim quất tự nhiên, kết hợp hải sản tươi ngon: tôm, mực, cá hồi. Điểm xuyết rau thơm Việt Nam tạo nên hương vị fusion độc đáo.",
+                    base: "Đế mỏng giòn truyền thống",
+                    topping: "Tôm, mực, cá hồi, rau thơm Việt Nam",
+                    sauce: "Xốt kim quất đặc biệt"
+                },
+                {
+                    description: "Pizza Bơ Gơ Bò Mỹ Sốt Phô Mai - Hương vị hamburger cổ điển trên đế bánh pizza. Thịt bò Mỹ xay tươi, phô mai Cheddar, cà chua, hành tây, dưa chuột muối. Sốt phô mai đặc biệt tạo nên hương vị đặc trưng của burger Mỹ.",
+                    base: "Đế dày mềm kiểu Detroit",
+                    topping: "Thịt bò Mỹ xay, phô mai Cheddar, cà chua, hành tây, dưa chuột muối",
+                    sauce: "Sốt phô mai đặc biệt và sốt burger"
+                },
+                {
+                    description: "Pizza Dăm Bông Dứa Kiểu Hawaii - Phiên bản độc đáo của pizza Hawaii với dăm bông thượng hạng, dứa tươi ngọt, phô mai Mozzarella. Sự kết hợp ngọt-mặn hoàn hảo tạo nên hương vị nhiệt đới đặc trưng.",
+                    base: "Đế vừa kiểu Hawaii",
+                    topping: "Dăm bông cao cấp, dứa tươi, phô mai Mozzarella",
+                    sauce: "Sốt cà chua ngọt đặc biệt"
+                },
+                {
+                    description: "Pizza 5 Loại Thịt Thượng Hạng - Thiên đường cho tín đồ thịt với sự góp mặt của 5 loại thịt cao cấp: pepperoni, xúc xích Ý, thịt bò, thịt heo xông khói, và gà nướng. Phủ phô mai Mozzarella và rau củ tươi.",
+                    base: "Đế dày kiểu Roma",
+                    topping: "Pepperoni, xúc xích Ý, thịt bò, thịt heo xông khói, gà nướng, phô mai Mozzarella",
+                    sauce: "Sốt cà chua đặc biệt và sốt BBQ"
+                }
+            ];
+
+            function getProductPrice(productCard) {
+                // Kiểm tra xem sản phẩm có phải là combo khuyến mãi không
+                const isDiscount = productCard.closest('.discount');
+                if (isDiscount) {
+                    // Nếu là sản phẩm khuyến mãi, lấy giá khuyến mãi (span thứ 2)
+                    const spans = productCard.querySelectorAll('.text span');
+                    return spans[1]?.textContent || '0đ';
+                } else {
+                    // Nếu là sản phẩm thường, lấy giá thông thường
+                    return productCard.querySelector('.text p')?.textContent || '0đ';
+                }
+            }
+
+            function updateCartUI() {
+                cartTableBody.innerHTML = '';
+                let total = 0;
+                cart.forEach((item, index) => {
+                    const row = document.createElement('tr');
+                    // Chuyển đổi giá từ chuỗi "xxx.xxxđ" thành số
+                    const priceNumber = parseInt(item.price.replace(/\D/g, ''));
+                    const itemTotal = priceNumber * item.quantity;
+                    total += itemTotal;
+
+                    row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${item.name}</td>
+                    <td>${item.price}</td>
+                    <td>${item.quantity}</td>
+                    <td>
+                        <a href="#" class="delete" data-index="${index}">Delete</a>
+                        <a href="#" class="add" data-index="${index}">Add</a>
+                    </td>
+                `;
+                    cartTableBody.appendChild(row);
+                });
+
+                // Cập nhật tổng tiền
+                document.getElementById('cart-total-amount').textContent = formatPrice(total);
+                cartCountSpan.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+            }
+
+            // Xử lý số lượng trong popup chi tiết
+            document.querySelector('.minus-btn')?.addEventListener('click', () => {
+                const input = document.querySelector('.quantity-input');
+                const value = parseInt(input.value);
+                if (value > 1) {
+                    input.value = value - 1;
+                }
+            });
+
+            document.querySelector('.plus-btn')?.addEventListener('click', () => {
+                const input = document.querySelector('.quantity-input');
+                const value = parseInt(input.value);
+                if (value < 10) {
+                    input.value = value + 1;
+                }
+            });
+
+            // Xử lý thêm/xóa yêu thích từ popup chi tiết
+            document.querySelector('.add-to-favorite-btn')?.addEventListener('click', (e) => {
+                const name = document.getElementById('detail-name').textContent;
+                const price = document.getElementById('detail-price').textContent;
+                const image = document.getElementById('detail-image').src;
+                const btn = e.currentTarget;
+
+                const favoriteItem = {
+                    name: name,
+                    price: price,
+                    image: image
+                };
+
+                const existingIndex = favorites.findIndex(item => item.name === name);
+
+                if (existingIndex !== -1) {
+                    favorites.splice(existingIndex, 1);
+                    btn.classList.remove('active');
+                    alert('Đã xóa khỏi danh sách yêu thích!');
+                } else {
+                    favorites.push(favoriteItem);
+                    btn.classList.add('active');
+                    alert('Đã thêm vào danh sách yêu thích!');
+                }
+
+                localStorage.setItem('favorites', JSON.stringify(favorites));
+                updateFavoritesList();
+            });
+
+            // Xử lý hiển thị chi tiết sản phẩm
+            document.querySelectorAll('.button a:last-child').forEach((detailBtn, index) => {
+                detailBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const productCard = e.target.closest('.card');
+                    const name = productCard.querySelector('.text h3').textContent.trim();
+                    const price = getProductPrice(productCard);
+                    const imageSrc = productCard.querySelector('.image img')?.src || '';
+
+                    const data = descriptions[index % descriptions.length];
+
+                    document.getElementById('detail-name').textContent = name;
+                    document.getElementById('detail-price').textContent = price;
+                    document.getElementById('detail-image').src = imageSrc;
+                    document.getElementById('detail-description').textContent = data.description;
+                    document.getElementById('detail-base').textContent = data.base;
+                    document.getElementById('detail-topping').textContent = data.topping;
+                    document.getElementById('detail-sauce').textContent = data.sauce;
+
+                    // Reset quantity input
+                    document.querySelector('.quantity-input').value = 1;
+
+                    // Cập nhật trạng thái nút yêu thích
+                    const favoriteBtn = document.querySelector('.add-to-favorite-btn');
+                    if (favoriteBtn) {
+                        const isFavorite = favorites.some(item => item.name === name);
+                        if (isFavorite) {
+                            favoriteBtn.classList.add('active');
+                        } else {
+                            favoriteBtn.classList.remove('active');
+                        }
+                    }
+
+                    document.querySelector('.product-detail-popup').style.display = 'flex';
+                });
+            });
+
+            // Xử lý đóng popup
+            document.querySelector('.close-detail')?.addEventListener('click', () => {
+                document.querySelector('.product-detail-popup').style.display = 'none';
+            });
+
+            document.querySelector('.product-detail-popup')?.addEventListener('click', (e) => {
+                if (e.target.classList.contains('product-detail-popup')) {
+                    e.target.style.display = 'none';
+                }
+            });
+
+            // Xử lý các nút trong giỏ hàng
+            cartTableBody.addEventListener('click', (e) => {
+                e.preventDefault();
+                const index = parseInt(e.target.dataset.index);
+                if (e.target.classList.contains('delete')) {
+                    cart[index].quantity -= 1;
+                    if (cart[index].quantity <= 0) {
+                        cart.splice(index, 1);
+                    }
+                } else if (e.target.classList.contains('add')) {
+                    cart[index].quantity += 1;
+                }
+                updateCartUI();
+            });
+
+            function formatPrice(price) {
+                return price.toLocaleString('vi-VN') + 'đ';
+            }
+
+            // Hàm cập nhật danh sách yêu thích trong dropdown
+            function updateFavoritesList() {
+                const favoriteList = document.querySelector('.favorite-list');
+
+                if (favorites.length === 0) {
+                    favoriteList.innerHTML = '<div class="no-favorites">Chưa có pizza yêu thích</div>';
+                    return;
+                }
+
+                favoriteList.innerHTML = favorites.map(item => `
+                <div class="favorite-item">
+                    <img src="${item.image}" alt="${item.name}">
+                    <div class="favorite-item-info">
+                        <span class="favorite-item-name">${item.name}</span>
+                        <span class="favorite-item-price">${item.price}</span>
+                    </div>
+                    <i class="fas fa-times remove-favorite" data-name="${item.name}"></i>
+                </div>
+            `).join('');
+
+                // Xử lý sự kiện xóa yêu thích
+                document.querySelectorAll('.remove-favorite').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const name = e.target.dataset.name;
+                        favorites = favorites.filter(item => item.name !== name);
+                        localStorage.setItem('favorites', JSON.stringify(favorites));
+                        updateFavoritesList();
+
+                        // Cập nhật trạng thái nút yêu thích trong popup chi tiết nếu đang mở
+                        const detailName = document.getElementById('detail-name')?.textContent;
+                        if (detailName === name) {
+                            document.querySelector('.add-to-favorite-btn')?.classList.remove('active');
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const token = localStorage.getItem('token');
+            const userEmail = localStorage.getItem('userEmail');
+
+            if (token) {
+                document.body.classList.add("logged-in");
+                updateUserProfile(userEmail);
+            }
+
+            // Xử lý click để hiện/ẩn dropdown
+            const userProfile = document.querySelector('.user-profile');
+            const userDropdown = document.querySelector('.user-dropdown');
+            let isDropdownVisible = false;
+
+            userProfile.addEventListener('click', function (e) {
+                e.stopPropagation();
+                isDropdownVisible = !isDropdownVisible;
+                if (isDropdownVisible) {
+                    userDropdown.classList.add('show');
+                } else {
+                    userDropdown.classList.remove('show');
+                }
+            });
+
+            // Đóng dropdown khi click ra ngoài
+            document.addEventListener('click', function (e) {
+                if (!userProfile.contains(e.target)) {
+                    userDropdown.classList.remove('show');
+                    isDropdownVisible = false;
+                }
+            });
+
+            // Xử lý đăng xuất
+            document.getElementById('logout-link').addEventListener('click', function (e) {
+                e.preventDefault();
+                localStorage.removeItem('token');
+                localStorage.removeItem('userEmail');
+                localStorage.removeItem('role');
+                document.body.classList.remove("logged-in");
+                userDropdown.classList.remove('show');
+                isDropdownVisible = false;
+            });
+        });
+
+        // Hàm cập nhật thông tin user profile
+        function updateUserProfile(email) {
+            const userAvatar = document.querySelector('.user-avatar');
+            const userEmailElement = document.querySelector('.user-email');
+
+            if (email) {
+                const firstLetter = email.split('@')[0].charAt(0);
+                userAvatar.textContent = firstLetter.toUpperCase();
+                userEmailElement.textContent = email;
+            }
+        }
+    </script>
+</body>
+
+</html>
