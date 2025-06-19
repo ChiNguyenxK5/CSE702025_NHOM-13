@@ -422,5 +422,5 @@ app.post('/api/upload', [checkDbConnection, authenticateToken], upload.single('i
 // Khởi động server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`🚀 Server đang chạy tại http://localhost:${PORT}`);
+    console.log(` Server đang chạy tại http://localhost:${PORT}`);
 });
