@@ -19,7 +19,7 @@ db.connect((err) => {
         }
         return;
     }
-    console.log('✅ Đã kết nối thành công đến MySQL');
+    console.log(' Đã kết nối thành công đến MySQL');
 });
 
 // Hàm tìm user theo email
