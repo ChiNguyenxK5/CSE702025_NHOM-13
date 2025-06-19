@@ -10,10 +10,12 @@
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" />
     <style>
+        /* Ẩn nút login khi đã đăng nhập */
         .logged-in .login-btn {
             display: none;
         }
 
+        /* Hiển thị nút logout khi đã đăng nhập */
         .logout-btn {
             display: none;
         }
@@ -36,6 +38,7 @@
             background: #cc0000;
         }
 
+        /* Hiển thị tên người dùng */
         .user-info {
             display: none;
             margin-right: 15px;
@@ -47,6 +50,7 @@
             display: inline-block;
         }
 
+        /* Style cho user profile */
         .user-profile {
             position: relative;
             cursor: pointer;
@@ -68,6 +72,7 @@
             background: #e9ecef;
         }
 
+        /* Style cho avatar */
         .user-avatar {
             width: 35px;
             height: 35px;
@@ -571,6 +576,7 @@
             display: block;
         }
     </style>
+
 </head>
 
 <body>
@@ -713,217 +719,8 @@
                 <div class="title">
                     <h3>Sản phẩm bán chạy</h3>
                 </div>
-                <div class="show_product">
-                    <div class="card">
-                        <div class="items">
-                            <div class="image">
-                                <img src="/webHTML-master/uploads/pizza2.jpg" alt="">
-                            </div>
-                            <div class="text">
-                                <h3>Pizza ngập vị phô mai hảo hạng </h3>
-                                <p>175,000đ</p>
-                            </div>
-                            <div class="color">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                            <div class="button">
-                                <a href="#">Mua</a>
-                                <a href="#">Xem chi tiết</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="items">
-                            <div class="image">
-                                <img src="/webHTML-master/uploads/pizza1.jpg" alt="">
-                            </div>
-                            <div class="text">
-                                <h3>Pizza núi lửa phô mai xúc xích Ý </h3>
-                                <p>305,000đ</p>
-                            </div>
-                            <div class="color">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                            <div class="button">
-                                <a href="#">Mua</a>
-                                <a href="#">Xem chi tiết</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="items">
-                            <div class="image">
-                                <img src="/webHTML-master/uploads/pizza3.jpg" alt="">
-                            </div>
-                            <div class="text">
-                                <h3>Pizza topping bò và tôm kiểu Mỹ </h3>
-                                <p>235,000đ</p>
-                            </div>
-                            <div class="color">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                            <div class="button">
-                                <a href="#">Mua</a>
-                                <a href="#">Xem chi tiết</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="items">
-                            <div class="image">
-                                <img src="/webHTML-master/uploads/pizza4.png" alt="">
-                            </div>
-                            <div class="text">
-                                <h3>Pizza hải sản sốt PESTO kem</h3>
-                                <p>225,000đ</p>
-                            </div>
-                            <div class="color">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                            <div class="button">
-                                <a href="#">Mua</a>
-                                <a href="#">Xem chi tiết</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="items">
-                            <div class="image">
-                                <img src="/webHTML-master/uploads/pizza8.jpg" alt="">
-                            </div>
-                            <div class="text">
-                                <h3>Pizza rau củ thập cẩm</h3>
-                                <p>155,000đ</p>
-                            </div>
-                            <div class="color">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                            <div class="button">
-                                <a href="#">Mua</a>
-                                <a href="#">Xem chi tiết</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="items">
-                            <div class="image">
-                                <img src="/webHTML-master/uploads/pizza5.jpg" alt="">
-                            </div>
-                            <div class="text">
-                                <h3>Pizza gà phô mai thịt heo xông khói </h3>
-                                <p>175,000đ</p>
-                            </div>
-                            <div class="color">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                            <div class="button">
-                                <a href="#">Mua</a>
-                                <a href="#">Xem chi tiết</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="items">
-                            <div class="image">
-                                <img src="/webHTML-master/uploads/pizza6.jpg" alt="">
-                            </div>
-                            <div class="text">
-                                <h3>Pizza hải sản xốt kim quất </h3>
-                                <p>215,000đ</p>
-                            </div>
-                            <div class="color">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                            <div class="button">
-                                <a href="#">Mua</a>
-                                <a href="#">Xem chi tiết</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="items">
-                            <div class="image">
-                                <img src="/webHTML-master/uploads/pizza7.jpg" alt="">
-                            </div>
-                            <div class="text">
-                                <h3>Pizza bơ gơ bò Mỹ sốt phô mai </h3>
-                                <p>205,000đ</p>
-                            </div>
-                            <div class="color">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                            <div class="button">
-                                <a href="#">Mua</a>
-                                <a href="#">Xem chi tiết</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="items">
-                            <div class="image">
-                                <img src="/webHTML-master/uploads/pizza9.jpg" alt="">
-                            </div>
-                            <div class="text">
-                                <h3>Pizza dăm bông dứa kiểu Hawaii</h3>
-                                <p>175,000đ</p>
-                            </div>
-                            <div class="color">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                            <div class="button">
-                                <a href="#">Mua</a>
-                                <a href="#">Xem chi tiết</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="items">
-                            <div class="image">
-                                <img src="/webHTML-master/uploads/pizza10.jpg" alt="">
-                            </div>
-                            <div class="text">
-                                <h3>Pizza 5 loại thịt thượng hạng</h3>
-                                <p>205,000đ</p>
-                            </div>
-                            <div class="color">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                            <div class="button">
-                                <a href="#">Mua</a>
-                                <a href="#">Xem chi tiết</a>
-                            </div>
-                        </div>
-                    </div>
+                <div class="show_product hot">
+
                 </div>
             </div>
         </section>
@@ -934,122 +731,8 @@
                 <div class="title">
                     <h3>Combo khuyến mãi</h3>
                 </div>
-                <div class="show_product">
-                    <div class="card">
-                        <div class="items">
-                            <div class="image">
-                                <img src="/webHTML-master/uploads/pizzauudai1.jpg" alt="">
-                            </div>
-                            <div class="text">
-                                <h3>Pizaa NewYork size khổng lồ</h3>
-                                <span><s>499.000đ</s></span>
-                                <span>249.500đ</span>
-                            </div>
-                            <span class="discount">50%</span>
-                            <div class="color">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                            <div class="button">
-                                <a href="#">Mua</a>
-                                <a href="#">Xem chi tiết</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="items">
-                            <div class="image">
-                                <img src="/webHTML-master/uploads/pizzauudai2.jpg" alt="">
-                            </div>
-                            <div class="text">
-                                <h3>Càng đông càng ngon</h3>
-                                <span><s>349.000đ</s></span>
-                                <span>279.000đ</span>
-                            </div>
-                            <span class="discount">25%</span>
-                            <div class="color">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                            <div class="button">
-                                <a href="#">Mua</a>
-                                <a href="#">Xem chi tiết</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="items">
-                            <div class="image">
-                                <img src="/webHTML-master/uploads/pizzauudai3.jpg" alt="">
-                            </div>
-                            <div class="text">
-                                <h3>Gà nướng qua lò ngũ vị</h3>
-                                <span><s>99.000đ</s></span>
-                                <span>89.000đ</span>
-                            </div>
-                            <span class="discount">10%</span>
-                            <div class="color">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                            <div class="button">
-                                <a href="#">Mua</a>
-                                <a href="#">Xem chi tiết</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="items">
-                            <div class="image">
-                                <img src="/webHTML-master/uploads/pizzauudai4.jpg" alt="">
-                            </div>
-                            <div class="text">
-                                <h3>Tiết kiệm 50% khi mua pizza thứ 2</h3>
-                                <span><s>500.000đ</s></span>
-                                <span>250.000đ</span>
-                            </div>
-                            <span class="discount">50%</span>
-                            <div class="color">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                            <div class="button">
-                                <a href="#">Mua</a>
-                                <a href="#">Xem chi tiết</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="items">
-                            <div class="image">
-                                <img src="/webHTML-master/uploads/pizzauudai5.png" alt="">
-                            </div>
-                            <div class="text">
-                                <h3>Mỳ ý ở đây ngon VIBE</h3>
-                                <span><s>178.000đ</s></span>
-                                <span>89.000đ</span>
-                            </div>
-                            <span class="discount">50%</span>
-                            <div class="color">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                            <div class="button">
-                                <a href="#">Mua</a>
-                                <a href="#">Xem chi tiết</a>
-                            </div>
-                        </div>
-                    </div>
+                <div class="show_product discount">
+
                 </div>
             </div>
         </section>
@@ -1177,13 +860,14 @@
             overlay.classList.remove('active');
         });
     </script>
+    <!-- ...existing code phần đầu giữ nguyên... -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             // Khởi tạo danh sách yêu thích từ localStorage
             let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
             updateFavoritesList();
 
-            const cart = [];
+            let cart = [];
             const cartTableBody = document.querySelector('.popup_shopping tbody');
             const cartCountSpan = document.querySelector('#popup_card span');
 
@@ -1197,192 +881,17 @@
                 document.body.classList.add('show-popup');
             }
 
-            // Xử lý thêm vào giỏ hàng từ popup chi tiết
-            document.querySelector('.add-to-cart-btn')?.addEventListener('click', () => {
-                if (!isLoggedIn()) {
-                    alert('Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng!');
-                    showLoginForm();
-                    return;
-                }
-
-                const name = document.getElementById('detail-name').textContent;
-                const price = document.getElementById('detail-price').textContent;
-                const quantity = parseInt(document.querySelector('.quantity-input').value);
-
-                const existingItem = cart.find(item => item.name === name);
-                if (existingItem) {
-                    const newQuantity = existingItem.quantity + quantity;
-                    if (newQuantity <= 10) {
-                        existingItem.quantity = newQuantity;
-                    } else {
-                        alert('Số lượng sản phẩm không thể vượt quá 10');
-                        return;
-                    }
-                } else {
-                    cart.push({ name, price, quantity });
-                }
-
-                updateCartUI();
-                alert('Đã thêm sản phẩm vào giỏ hàng!');
-            });
-
-            // Xử lý giỏ hàng từ trang chính
-            document.querySelectorAll('.button a:first-child').forEach((buyBtn) => {
-                buyBtn.addEventListener('click', (e) => {
-                    e.preventDefault();
-
-                    if (!isLoggedIn()) {
-                        alert('Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng!');
-                        showLoginForm();
-                        return;
-                    }
-
-                    const productCard = e.target.closest('.card');
-                    const name = productCard.querySelector('.text h3').textContent.trim();
-                    const price = getProductPrice(productCard);
-
-                    const existingItem = cart.find(item => item.name === name);
-                    if (existingItem) {
-                        if (existingItem.quantity < 10) {
-                            existingItem.quantity += 1;
-                        } else {
-                            alert('Số lượng sản phẩm không thể vượt quá 10');
-                            return;
-                        }
-                    } else {
-                        cart.push({ name, price, quantity: 1 });
-                    }
-                    updateCartUI();
-                });
-            });
-
-            // Xử lý nút thanh toán
-            document.querySelector('.checkout-btn')?.addEventListener('click', () => {
-                if (!isLoggedIn()) {
-                    alert('Vui lòng đăng nhập để thanh toán!');
-                    showLoginForm();
-                    return;
-                }
-
-                if (cart.length === 0) {
-                    alert('Giỏ hàng của bạn đang trống!');
-                    return;
-                }
-
-                const total = cart.reduce((sum, item) => {
-                    const priceNumber = parseInt(item.price.replace(/\D/g, ''));
-                    return sum + (priceNumber * item.quantity);
-                }, 0);
-
-                const orderDetails = cart.map(item =>
-                    `${item.name} x${item.quantity} - ${item.price}`
-                ).join('\n');
-
-                const message = `Xác nhận đơn hàng:\n\n${orderDetails}\n\nTổng tiền: ${formatPrice(total)}`;
-
-                if (confirm(message)) {
-                    alert('Đặt hàng thành công! Cảm ơn bạn đã mua hàng.');
-                    cart.length = 0; // Xóa giỏ hàng
-                    updateCartUI();
-                    document.querySelector('.popup_shopping').classList.remove('active');
-                    document.querySelector('.overlay').classList.remove('active');
-                }
-            });
-
-            // Xử lý click vào icon giỏ hàng
-            document.getElementById('popup_card').addEventListener('click', () => {
-                if (!isLoggedIn()) {
-                    alert('Vui lòng đăng nhập để xem giỏ hàng!');
-                    showLoginForm();
-                    return;
-                }
-                document.querySelector('.popup_shopping').classList.add('active');
-                document.querySelector('.overlay').classList.add('active');
-            });
-
-            // Dữ liệu mô tả chi tiết cho từng sản phẩm
-            const descriptions = [
-                {
-                    description: "Pizza Ngập Phô Mai Hảo Hạng - Sự kết hợp hoàn hảo của 5 loại phô mai cao cấp: Mozzarella, Cheddar, Parmesan, Phô mai dê và Phô mai xanh. Lớp phô mai béo ngậy, kéo sợi quyến rũ hòa quyện với đế bánh giòn rụm, tạo nên hương vị đặc trưng khó cưỡng.",
-                    base: "Đế mỏng giòn đặc biệt, được nướng trong lò củi truyền thống",
-                    topping: "Phô mai Mozzarella, Cheddar, Parmesan, Phô mai dê, Phô mai xanh",
-                    sauce: "Sốt cà chua Ý thượng hạng"
-                },
-                {
-                    description: "Pizza Núi Lửa Phô Mai Xúc Xích Ý - Tuyệt phẩm với lớp phô mai Mozzarella tan chảy, xúc xích Ý thơm nồng, ớt chuông và nấm tươi. Hương vị cay nồng của ớt hòa quyện cùng vị béo của phô mai tạo nên trải nghiệm ẩm thực độc đáo.",
-                    base: "Đế dày mềm kiểu New York",
-                    topping: "Xúc xích Ý, phô mai Mozzarella, ớt chuông, nấm, hành tây",
-                    sauce: "Sốt cà chua cay đặc biệt"
-                },
-                {
-                    description: "Pizza Topping Bò và Tôm Kiểu Mỹ - Sự kết hợp độc đáo giữa thịt bò Úc thượng hạng và tôm sú tươi. Thịt bò mềm juicy, tôm giòn ngọt, cùng với hỗn hợp rau củ tươi và phô mai Mozzarella béo ngậy tạo nên hương vị đầy đặc trưng.",
-                    base: "Đế vừa kiểu Chicago",
-                    topping: "Thịt bò Úc, tôm sú, nấm, hành tây, ớt chuông",
-                    sauce: "Sốt BBQ và sốt mayonnaise"
-                },
-                {
-                    description: "Pizza Hải Sản Sốt Pesto Kem - Hương vị biển cả với hải sản tươi ngon: tôm, mực, sò điệp, cùng sốt Pesto tự nhiên từ lá húng tây. Phủ lớp phô mai Mozzarella béo ngậy, điểm xuyết rau củ tươi.",
-                    base: "Đế mỏng giòn kiểu Ý",
-                    topping: "Tôm, mực, sò điệp, nấm, hành tây, ớt chuông",
-                    sauce: "Sốt Pesto kem đặc biệt"
-                },
-                {
-                    description: "Pizza Rau Củ Thập Cẩm - Lựa chọn tuyệt vời cho người ăn chay với sự kết hợp của các loại rau củ tươi ngon: nấm, ớt chuông, cà chua, hành tây, oliu đen, bắp ngọt. Hương vị thanh đạm và bổ dưỡng.",
-                    base: "Đế giòn vừa kiểu Địa Trung Hải",
-                    topping: "Nấm, ớt chuông, cà chua, hành tây, oliu đen, bắp ngọt",
-                    sauce: "Sốt cà chua hữu cơ"
-                },
-                {
-                    description: "Pizza Gà Phô Mai Thịt Heo Xông Khói - Sự kết hợp hài hòa giữa thịt gà mềm ngọt, thịt heo xông khói giòn thơm và phô mai Mozzarella béo ngậy. Thêm hành tây và nấm tạo nên hương vị đậm đà khó quên.",
-                    base: "Đế dày kiểu American",
-                    topping: "Thịt gà, thịt heo xông khói, phô mai Mozzarella, hành tây, nấm",
-                    sauce: "Sốt BBQ đặc biệt"
-                },
-                {
-                    description: "Pizza Hải Sản Xốt Kim Quất - Sáng tạo độc đáo với hương vị chua ngọt từ xốt kim quất tự nhiên, kết hợp hải sản tươi ngon: tôm, mực, cá hồi. Điểm xuyết rau thơm Việt Nam tạo nên hương vị fusion độc đáo.",
-                    base: "Đế mỏng giòn truyền thống",
-                    topping: "Tôm, mực, cá hồi, rau thơm Việt Nam",
-                    sauce: "Xốt kim quất đặc biệt"
-                },
-                {
-                    description: "Pizza Bơ Gơ Bò Mỹ Sốt Phô Mai - Hương vị hamburger cổ điển trên đế bánh pizza. Thịt bò Mỹ xay tươi, phô mai Cheddar, cà chua, hành tây, dưa chuột muối. Sốt phô mai đặc biệt tạo nên hương vị đặc trưng của burger Mỹ.",
-                    base: "Đế dày mềm kiểu Detroit",
-                    topping: "Thịt bò Mỹ xay, phô mai Cheddar, cà chua, hành tây, dưa chuột muối",
-                    sauce: "Sốt phô mai đặc biệt và sốt burger"
-                },
-                {
-                    description: "Pizza Dăm Bông Dứa Kiểu Hawaii - Phiên bản độc đáo của pizza Hawaii với dăm bông thượng hạng, dứa tươi ngọt, phô mai Mozzarella. Sự kết hợp ngọt-mặn hoàn hảo tạo nên hương vị nhiệt đới đặc trưng.",
-                    base: "Đế vừa kiểu Hawaii",
-                    topping: "Dăm bông cao cấp, dứa tươi, phô mai Mozzarella",
-                    sauce: "Sốt cà chua ngọt đặc biệt"
-                },
-                {
-                    description: "Pizza 5 Loại Thịt Thượng Hạng - Thiên đường cho tín đồ thịt với sự góp mặt của 5 loại thịt cao cấp: pepperoni, xúc xích Ý, thịt bò, thịt heo xông khói, và gà nướng. Phủ phô mai Mozzarella và rau củ tươi.",
-                    base: "Đế dày kiểu Roma",
-                    topping: "Pepperoni, xúc xích Ý, thịt bò, thịt heo xông khói, gà nướng, phô mai Mozzarella",
-                    sauce: "Sốt cà chua đặc biệt và sốt BBQ"
-                }
-            ];
-
-            function getProductPrice(productCard) {
-                // Kiểm tra xem sản phẩm có phải là combo khuyến mãi không
-                const isDiscount = productCard.closest('.discount');
-                if (isDiscount) {
-                    // Nếu là sản phẩm khuyến mãi, lấy giá khuyến mãi (span thứ 2)
-                    const spans = productCard.querySelectorAll('.text span');
-                    return spans[1]?.textContent || '0đ';
-                } else {
-                    // Nếu là sản phẩm thường, lấy giá thông thường
-                    return productCard.querySelector('.text p')?.textContent || '0đ';
-                }
+            // Hàm format giá
+            function formatPrice(price) {
+                return Number(price).toLocaleString('vi-VN') + 'đ';
             }
 
+            // Hàm cập nhật giỏ hàng UI
             function updateCartUI() {
                 cartTableBody.innerHTML = '';
                 let total = 0;
                 cart.forEach((item, index) => {
                     const row = document.createElement('tr');
-                    // Chuyển đổi giá từ chuỗi "xxx.xxxđ" thành số
                     const priceNumber = parseInt(item.price.replace(/\D/g, ''));
                     const itemTotal = priceNumber * item.quantity;
                     total += itemTotal;
@@ -1400,104 +909,50 @@
                     cartTableBody.appendChild(row);
                 });
 
-                // Cập nhật tổng tiền
                 document.getElementById('cart-total-amount').textContent = formatPrice(total);
                 cartCountSpan.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
             }
-
-            // Xử lý số lượng trong popup chi tiết
-            document.querySelector('.minus-btn')?.addEventListener('click', () => {
-                const input = document.querySelector('.quantity-input');
-                const value = parseInt(input.value);
-                if (value > 1) {
-                    input.value = value - 1;
-                }
+            // Xử lý đăng xuất
+            document.getElementById('logout-link').addEventListener('click', function (e) {
+                e.preventDefault();
+                localStorage.removeItem('token');
+                localStorage.removeItem('userEmail');
+                localStorage.removeItem('role');
+                document.body.classList.remove("logged-in");
+                userDropdown.classList.remove('show');
+                isDropdownVisible = false;
             });
 
-            document.querySelector('.plus-btn')?.addEventListener('click', () => {
-                const input = document.querySelector('.quantity-input');
-                const value = parseInt(input.value);
-                if (value < 10) {
-                    input.value = value + 1;
+            // Hàm cập nhật danh sách yêu thích trong dropdown
+            function updateFavoritesList() {
+                const favoriteList = document.querySelector('.favorite-list');
+                if (favorites.length === 0) {
+                    favoriteList.innerHTML = '<div class="no-favorites">Chưa có pizza yêu thích</div>';
+                    return;
                 }
-            });
-
-            // Xử lý thêm/xóa yêu thích từ popup chi tiết
-            document.querySelector('.add-to-favorite-btn')?.addEventListener('click', (e) => {
-                const name = document.getElementById('detail-name').textContent;
-                const price = document.getElementById('detail-price').textContent;
-                const image = document.getElementById('detail-image').src;
-                const btn = e.currentTarget;
-
-                const favoriteItem = {
-                    name: name,
-                    price: price,
-                    image: image
-                };
-
-                const existingIndex = favorites.findIndex(item => item.name === name);
-
-                if (existingIndex !== -1) {
-                    favorites.splice(existingIndex, 1);
-                    btn.classList.remove('active');
-                    alert('Đã xóa khỏi danh sách yêu thích!');
-                } else {
-                    favorites.push(favoriteItem);
-                    btn.classList.add('active');
-                    alert('Đã thêm vào danh sách yêu thích!');
-                }
-
-                localStorage.setItem('favorites', JSON.stringify(favorites));
-                updateFavoritesList();
-            });
-
-            // Xử lý hiển thị chi tiết sản phẩm
-            document.querySelectorAll('.button a:last-child').forEach((detailBtn, index) => {
-                detailBtn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const productCard = e.target.closest('.card');
-                    const name = productCard.querySelector('.text h3').textContent.trim();
-                    const price = getProductPrice(productCard);
-                    const imageSrc = productCard.querySelector('.image img')?.src || '';
-
-                    const data = descriptions[index % descriptions.length];
-
-                    document.getElementById('detail-name').textContent = name;
-                    document.getElementById('detail-price').textContent = price;
-                    document.getElementById('detail-image').src = imageSrc;
-                    document.getElementById('detail-description').textContent = data.description;
-                    document.getElementById('detail-base').textContent = data.base;
-                    document.getElementById('detail-topping').textContent = data.topping;
-                    document.getElementById('detail-sauce').textContent = data.sauce;
-
-                    // Reset quantity input
-                    document.querySelector('.quantity-input').value = 1;
-
-                    // Cập nhật trạng thái nút yêu thích
-                    const favoriteBtn = document.querySelector('.add-to-favorite-btn');
-                    if (favoriteBtn) {
-                        const isFavorite = favorites.some(item => item.name === name);
-                        if (isFavorite) {
-                            favoriteBtn.classList.add('active');
-                        } else {
-                            favoriteBtn.classList.remove('active');
+                favoriteList.innerHTML = favorites.map(item => `
+                <div class="favorite-item">
+                    <img src="${item.image}" alt="${item.name}">
+                    <div class="favorite-item-info">
+                        <span class="favorite-item-name">${item.name}</span>
+                        <span class="favorite-item-price">${item.price}</span>
+                    </div>
+                    <i class="fas fa-times remove-favorite" data-name="${item.name}"></i>
+                </div>
+            `).join('');
+                document.querySelectorAll('.remove-favorite').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const name = e.target.dataset.name;
+                        favorites = favorites.filter(item => item.name !== name);
+                        localStorage.setItem('favorites', JSON.stringify(favorites));
+                        updateFavoritesList();
+                        const detailName = document.getElementById('detail-name')?.textContent;
+                        if (detailName === name) {
+                            document.querySelector('.add-to-favorite-btn')?.classList.remove('active');
                         }
-                    }
-
-                    document.querySelector('.product-detail-popup').style.display = 'flex';
+                    });
                 });
-            });
-
-            // Xử lý đóng popup
-            document.querySelector('.close-detail')?.addEventListener('click', () => {
-                document.querySelector('.product-detail-popup').style.display = 'none';
-            });
-
-            document.querySelector('.product-detail-popup')?.addEventListener('click', (e) => {
-                if (e.target.classList.contains('product-detail-popup')) {
-                    e.target.style.display = 'none';
-                }
-            });
+            }
 
             // Xử lý các nút trong giỏ hàng
             cartTableBody.addEventListener('click', (e) => {
@@ -1514,105 +969,251 @@
                 updateCartUI();
             });
 
-            function formatPrice(price) {
-                return price.toLocaleString('vi-VN') + 'đ';
-            }
+            // Xử lý popup chi tiết sản phẩm
+            function showProductDetail(product) {
+                document.getElementById('detail-name').textContent = product.name;
+                document.getElementById('detail-price').textContent = formatPrice(product.price);
+                document.getElementById('detail-image').src = product.image_url;
+                document.getElementById('detail-description').textContent = product.description || '';
+                document.getElementById('detail-base').textContent = product.base || '';
+                document.getElementById('detail-topping').textContent = product.topping || '';
+                document.getElementById('detail-sauce').textContent = product.sauce || '';
+                document.querySelector('.quantity-input').value = 1;
 
-            // Hàm cập nhật danh sách yêu thích trong dropdown
-            function updateFavoritesList() {
-                const favoriteList = document.querySelector('.favorite-list');
-
-                if (favorites.length === 0) {
-                    favoriteList.innerHTML = '<div class="no-favorites">Chưa có pizza yêu thích</div>';
-                    return;
+                // Cập nhật trạng thái nút yêu thích
+                const favoriteBtn = document.querySelector('.add-to-favorite-btn');
+                if (favoriteBtn) {
+                    const isFavorite = favorites.some(item => item.name === product.name);
+                    if (isFavorite) {
+                        favoriteBtn.classList.add('active');
+                    } else {
+                        favoriteBtn.classList.remove('active');
+                    }
                 }
 
-                favoriteList.innerHTML = favorites.map(item => `
-                <div class="favorite-item">
-                    <img src="${item.image}" alt="${item.name}">
-                    <div class="favorite-item-info">
-                        <span class="favorite-item-name">${item.name}</span>
-                        <span class="favorite-item-price">${item.price}</span>
-                    </div>
-                    <i class="fas fa-times remove-favorite" data-name="${item.name}"></i>
-                </div>
-            `).join('');
+                document.querySelector('.product-detail-popup').style.display = 'flex';
+            }
 
-                // Xử lý sự kiện xóa yêu thích
-                document.querySelectorAll('.remove-favorite').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        const name = e.target.dataset.name;
-                        favorites = favorites.filter(item => item.name !== name);
-                        localStorage.setItem('favorites', JSON.stringify(favorites));
-                        updateFavoritesList();
+            // Đóng popup chi tiết
+            document.querySelector('.close-detail')?.addEventListener('click', () => {
+                document.querySelector('.product-detail-popup').style.display = 'none';
+            });
+            document.querySelector('.product-detail-popup')?.addEventListener('click', (e) => {
+                if (e.target.classList.contains('product-detail-popup')) {
+                    e.target.style.display = 'none';
+                }
+            });
 
-                        // Cập nhật trạng thái nút yêu thích trong popup chi tiết nếu đang mở
-                        const detailName = document.getElementById('detail-name')?.textContent;
-                        if (detailName === name) {
-                            document.querySelector('.add-to-favorite-btn')?.classList.remove('active');
-                        }
-                    });
+            // Số lượng trong popup chi tiết
+            document.querySelector('.minus-btn')?.addEventListener('click', () => {
+                const input = document.querySelector('.quantity-input');
+                const value = parseInt(input.value);
+                if (value > 1) input.value = value - 1;
+            });
+            document.querySelector('.plus-btn')?.addEventListener('click', () => {
+                const input = document.querySelector('.quantity-input');
+                const value = parseInt(input.value);
+                if (value < 10) input.value = value + 1;
+            });
+
+            // Thêm/xóa yêu thích từ popup chi tiết
+            document.querySelector('.add-to-favorite-btn')?.addEventListener('click', (e) => {
+                const name = document.getElementById('detail-name').textContent;
+                const price = document.getElementById('detail-price').textContent;
+                const image = document.getElementById('detail-image').src;
+                const btn = e.currentTarget;
+                const favoriteItem = { name, price, image };
+                const existingIndex = favorites.findIndex(item => item.name === name);
+                if (existingIndex !== -1) {
+                    favorites.splice(existingIndex, 1);
+                    btn.classList.remove('active');
+                    alert('Đã xóa khỏi danh sách yêu thích!');
+                } else {
+                    favorites.push(favoriteItem);
+                    btn.classList.add('active');
+                    alert('Đã thêm vào danh sách yêu thích!');
+                }
+                localStorage.setItem('favorites', JSON.stringify(favorites));
+                updateFavoritesList();
+            });
+
+            // Xử lý thêm vào giỏ hàng từ popup chi tiết
+            document.querySelector('.add-to-cart-btn')?.addEventListener('click', () => {
+                if (!isLoggedIn()) {
+                    alert('Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng!');
+                    showLoginForm();
+                    return;
+                }
+                const name = document.getElementById('detail-name').textContent;
+                const price = document.getElementById('detail-price').textContent;
+                const quantity = parseInt(document.querySelector('.quantity-input').value);
+                const existingItem = cart.find(item => item.name === name);
+                if (existingItem) {
+                    const newQuantity = existingItem.quantity + quantity;
+                    if (newQuantity <= 10) {
+                        existingItem.quantity = newQuantity;
+                    } else {
+                        alert('Số lượng sản phẩm không thể vượt quá 10');
+                        return;
+                    }
+                } else {
+                    cart.push({ name, price, quantity });
+                }
+                updateCartUI();
+                alert('Đã thêm sản phẩm vào giỏ hàng!');
+            });
+
+            // Xử lý click vào icon giỏ hàng
+            document.getElementById('popup_card').addEventListener('click', () => {
+                if (!isLoggedIn()) {
+                    alert('Vui lòng đăng nhập để xem giỏ hàng!');
+                    showLoginForm();
+                    return;
+                }
+                document.querySelector('.popup_shopping').classList.add('active');
+                document.querySelector('.overlay').classList.add('active');
+            });
+
+            // Xử lý nút thanh toán
+            document.querySelector('.checkout-btn')?.addEventListener('click', () => {
+                if (!isLoggedIn()) {
+                    alert('Vui lòng đăng nhập để thanh toán!');
+                    showLoginForm();
+                    return;
+                }
+                if (cart.length === 0) {
+                    alert('Giỏ hàng của bạn đang trống!');
+                    return;
+                }
+                const total = cart.reduce((sum, item) => {
+                    const priceNumber = parseInt(item.price.replace(/\D/g, ''));
+                    return sum + (priceNumber * item.quantity);
+                }, 0);
+                const orderDetails = cart.map(item =>
+                    `${item.name} x${item.quantity} - ${item.price}`
+                ).join('\n');
+                const message = `Xác nhận đơn hàng:\n\n${orderDetails}\n\nTổng tiền: ${formatPrice(total)}`;
+                if (confirm(message)) {
+                    alert('Đặt hàng thành công! Cảm ơn bạn đã mua hàng.');
+                    cart.length = 0; // Xóa giỏ hàng
+                    updateCartUI();
+                    document.querySelector('.popup_shopping').classList.remove('active');
+                    document.querySelector('.overlay').classList.remove('active');
+                }
+            });
+
+            // --- Render sản phẩm động ---
+            let productsData = [];
+            fetch('http://localhost:3000/api/products')
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        productsData = data.products;
+                        // Render sản phẩm bán chạy
+                        document.querySelector('.show_product.hot').innerHTML = productsData
+                            .filter(p => p.type === 'hot')
+                            .map((product, idx) => renderProductCard(product, idx)).join('');
+                        // Render combo khuyến mãi
+                        document.querySelector('.show_product.discount').innerHTML = productsData
+                            .filter(p => p.type === 'discount')
+                            .map((product, idx) => renderProductCard(product, idx)).join('');
+
+                        // Gán lại sự kiện cho nút "Mua"
+                        document.querySelectorAll('.buy-btn').forEach((buyBtn, idx) => {
+                            buyBtn.addEventListener('click', (e) => {
+                                e.preventDefault();
+                                if (!isLoggedIn()) {
+                                    alert('Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng!');
+                                    showLoginForm();
+                                    return;
+                                }
+                                const product = productsData[idx];
+                                const name = product.name;
+                                const price = formatPrice(product.price);
+                                const existingItem = cart.find(item => item.name === name);
+                                if (existingItem) {
+                                    if (existingItem.quantity < 10) {
+                                        existingItem.quantity += 1;
+                                    } else {
+                                        alert('Số lượng sản phẩm không thể vượt quá 10');
+                                        return;
+                                    }
+                                } else {
+                                    cart.push({ name, price, quantity: 1 });
+                                }
+                                updateCartUI();
+                            });
+                        });
+
+                        // Gán lại sự kiện cho nút "Xem chi tiết"
+                        document.querySelectorAll('.detail-btn').forEach((detailBtn, idx) => {
+                            detailBtn.addEventListener('click', (e) => {
+                                e.preventDefault();
+                                const product = productsData[idx];
+                                showProductDetail(product);
+                            });
+                        });
+                    }
                 });
+
+            function renderProductCard(product, idx) {
+                return `
+    <div class="card" data-index="${idx}">
+        <div class="items">
+            <div class="image">
+                <img src="${product.image_url}" alt="">
+            </div>
+            <div class="text">
+                <h3>${product.name}</h3>
+                <p>${Number(product.price).toLocaleString('vi-VN')}đ</p>
+            </div>
+            <div class="color">
+                <span></span><span></span><span></span><span></span>
+            </div>
+            <div class="button">
+                <a href="#" class="buy-btn">Mua</a>
+                <a href="#" class="detail-btn">Xem chi tiết</a>
+            </div>
+        </div>
+    </div>
+    `;
             }
         });
     </script>
-
     <script>
+        //xử lí đăng nhập
         document.addEventListener('DOMContentLoaded', function () {
-            const token = localStorage.getItem('token');
+            // Hiển thị email và avatar
             const userEmail = localStorage.getItem('userEmail');
-
-            if (token) {
-                document.body.classList.add("logged-in");
-                updateUserProfile(userEmail);
+            if (userEmail) {
+                document.querySelector('.user-email').textContent = userEmail;
+                document.querySelector('.user-avatar').textContent = userEmail.charAt(0).toUpperCase();
             }
 
-            // Xử lý click để hiện/ẩn dropdown
+            // Toggle dropdown
             const userProfile = document.querySelector('.user-profile');
             const userDropdown = document.querySelector('.user-dropdown');
             let isDropdownVisible = false;
 
             userProfile.addEventListener('click', function (e) {
                 e.stopPropagation();
+                userDropdown.classList.toggle('show');
                 isDropdownVisible = !isDropdownVisible;
-                if (isDropdownVisible) {
-                    userDropdown.classList.add('show');
-                } else {
-                    userDropdown.classList.remove('show');
-                }
             });
 
             // Đóng dropdown khi click ra ngoài
-            document.addEventListener('click', function (e) {
-                if (!userProfile.contains(e.target)) {
+            document.addEventListener('click', function () {
+                if (isDropdownVisible) {
                     userDropdown.classList.remove('show');
                     isDropdownVisible = false;
                 }
             });
 
-            // Xử lý đăng xuất
-            document.getElementById('logout-link').addEventListener('click', function (e) {
-                e.preventDefault();
-                localStorage.removeItem('token');
-                localStorage.removeItem('userEmail');
-                localStorage.removeItem('role');
-                document.body.classList.remove("logged-in");
-                userDropdown.classList.remove('show');
-                isDropdownVisible = false;
+            // Ngăn dropdown đóng khi click bên trong
+            userDropdown.addEventListener('click', function (e) {
+                e.stopPropagation();
             });
         });
-
-        // Hàm cập nhật thông tin user profile
-        function updateUserProfile(email) {
-            const userAvatar = document.querySelector('.user-avatar');
-            const userEmailElement = document.querySelector('.user-email');
-
-            if (email) {
-                const firstLetter = email.split('@')[0].charAt(0);
-                userAvatar.textContent = firstLetter.toUpperCase();
-                userEmailElement.textContent = email;
-            }
-        }
     </script>
 </body>
 
